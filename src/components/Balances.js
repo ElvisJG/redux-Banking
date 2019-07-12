@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 function Balances(props) {
-  const { total, checking, savings } = props;
+  const { total, checking, savings, accountActivity } = props;
 
   return (
     <section>
@@ -12,6 +12,12 @@ function Balances(props) {
         <li>Checking: ${checking}</li>
         <li>Savings: ${savings}</li>
       </ul>
+
+      <ul>
+        {accountActivity.map((activity, index) => {
+          return <li key={index}>{activity}</li>;
+        })}
+      </ul>
     </section>
   );
 }
@@ -20,7 +26,8 @@ const mapStateToProps = state => {
   return {
     total: state.checking + state.savings,
     checking: state.checking,
-    savings: state.savings
+    savings: state.savings,
+    accountActivity: state.accountActivity
   };
 };
 
