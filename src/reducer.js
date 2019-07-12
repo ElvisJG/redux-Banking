@@ -14,7 +14,6 @@ export default function(state = initialState, action) {
         ...state,
         [account]: newAmount
       };
-    // do something
     default:
       return state;
   }
