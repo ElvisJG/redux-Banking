@@ -1,6 +1,6 @@
-import { MAKE_DEPOSIT } from './actions';
+import { MAKE_DEPOSIT, MAKE_WITHDRAWAL } from './actions';
 
-// All state values need an initial value
+// all state values need an initial value
 const initialState = {
   checking: 0,
   savings: 0,
@@ -9,12 +9,12 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case MAKE_DEPOSIT:
+    case MAKE_DEPOSIT: {
       const { amount, account, description } = action.payload;
       const newAmount = parseInt(amount) + state[account];
-      // const newActivity = state.accountActivity.concat([description]);
       const newActivity = state.accountActivity.concat([
-        `${new Date()} - ${description} - ${amount}`
+        // adding more data to the description before it goes into store
+        `${new Date()}, ${description}, ${amount}`
       ]);
 
       return {
@@ -22,6 +22,22 @@ export default function(state = initialState, action) {
         [account]: newAmount,
         accountActivity: newActivity
       };
+    }
+    // NOTE: SAME AS MAKE_DEPOSIT, TWEAKED SO IT SUBTRACTS INSTEAD OF ADDS
+    case MAKE_WITHDRAWAL: {
+      const { amount, account, description } = action.payload;
+      const newAmount = state[account] - parseInt(amount);
+      const newActivity = state.accountActivity.concat([
+        // adding more data to the description before it goes into store
+        `${new Date()}, ${description}, -${amount}`
+      ]);
+
+      return {
+        ...state,
+        [account]: newAmount,
+        accountActivity: newActivity
+      };
+    }
     default:
       return state;
   }
