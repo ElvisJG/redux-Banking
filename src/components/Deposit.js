@@ -7,7 +7,8 @@ class Deposit extends React.Component {
     super();
     this.state = {
       amount: '',
-      account: 'checking'
+      account: 'checking',
+      description: ''
     };
   }
 
@@ -22,17 +23,20 @@ class Deposit extends React.Component {
   depositMoney = evt => {
     evt.preventDefault();
 
-    const { amount, account } = this.state;
-    this.props.deposit(amount, account);
+    const { amount, account, description } = this.state;
+    // Calling the action creator
+    this.props.deposit(amount, account, description);
 
+    // Resetting the form after submit
     this.setState({
-      amount: ''
+      amount: '',
+      description: ''
     });
   };
 
   render() {
     const { total } = this.props;
-    const { amount, account } = this.state;
+    const { amount, account, description } = this.state;
 
     return (
       <section>
@@ -57,6 +61,15 @@ class Deposit extends React.Component {
           </select>
 
           <br />
+
+          <input
+            type='text'
+            name='description'
+            placeholder='description'
+            value={description}
+            onChange={this.handleChange}
+            required
+          />
 
           <button type='submit'>Deposit</button>
         </form>
