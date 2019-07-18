@@ -3,7 +3,10 @@ import {
   MAKE_WITHDRAWAL,
   GET_ACCOUNT_START,
   GET_ACCOUNT_SUCCESS,
-  GET_ACCOUNT_FAILED
+  GET_ACCOUNT_FAILED,
+  LOGIN_SUCCESS,
+  LOGIN_FAILED,
+  LOGIN_START
 } from './actions';
 
 // all state values need an initial value
@@ -46,7 +49,6 @@ export default function(state = initialState, action) {
         accountActivity: newActivity
       };
     }
-
     case GET_ACCOUNT_START: {
       return {
         ...state,
@@ -65,6 +67,26 @@ export default function(state = initialState, action) {
       };
     }
     case GET_ACCOUNT_FAILED: {
+      return {
+        ...state,
+        isLoading: false,
+        errorMessage: action.payload.message
+      };
+    }
+    case LOGIN_START: {
+      return {
+        ...state,
+        isLoading: true
+      };
+    }
+    case LOGIN_SUCCESS: {
+      return {
+        ...state,
+        isLoading: true,
+        errorMessage: null
+      };
+    }
+    case LOGIN_FAILED: {
       return {
         ...state,
         isLoading: false,

@@ -1,33 +1,20 @@
 import './App.css';
 import React from 'react';
-import Balances from './Balances';
-import Deposit from './Deposit';
-import Withdrawal from './Withdrawal';
-import { getAccount } from '../actions';
-import { connect } from 'react-redux';
+import { Route } from 'react-router-dom';
+import PrivateRoute from './PrivateRoute';
+import Dashboard from './Dashboard';
+import Login from './Login';
 
 class App extends React.Component {
-  componentDidMount() {
-    this.props.getAccount();
-  }
-
   render() {
     return (
       <div className='app'>
-        <Balances />
-        <Deposit />
-        <Withdrawal />
+        <PrivateRoute exact path='/' component={Dashboard} />
+        <Route exact path='/login' component={Login} />
       </div>
     );
   }
 }
 
-const mapDispatchToProps = {
-  getAccount
-};
-
 // first param is mapStateToProps
-export default connect(
-  null,
-  mapDispatchToProps
-)(App);
+export default App;
